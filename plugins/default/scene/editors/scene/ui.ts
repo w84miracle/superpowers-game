@@ -343,7 +343,16 @@ function onNodesTreeViewDrop(event: DragEvent, dropLocation: TreeView.DropLocati
   return false;
 }
 
-function onNodeActivate() { ui.nodesTreeView.selectedNodes[0].classList.toggle("collapsed"); }
+function onNodeActivate() {
+  // Focus an actor by double clicking on treeview
+  if (ui.nodesTreeView.selectedNodes.length !== 1) return;
+  const nodeId = ui.nodesTreeView.selectedNodes[0].dataset["id"];
+  const position = new THREE.Box3().setFromObject(data.sceneUpdater.bySceneNodeId[nodeId].actor.threeObject).center();
+  if (ui.cameraMode === "2D") position.z = engine.cameraActor.getLocalPosition(new THREE.Vector3()).z;
+  engine.cameraActor.setLocalPosition(position);
+  if (ui.cameraMode === "3D") engine.cameraActor.moveOriented(new THREE.Vector3(0, 0, 20));
+
+}
 
 export function setupSelectedNode() {
   setupHelpers();
