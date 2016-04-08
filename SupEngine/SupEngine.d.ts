@@ -139,7 +139,7 @@ declare namespace SupEngine {
 
   interface MouseButtonState {
     isDown: boolean;
-    dblClicked: boolean;
+    doubleClicked: boolean;
     wasJustPressed: boolean;
     wasJustReleased: boolean;
   }

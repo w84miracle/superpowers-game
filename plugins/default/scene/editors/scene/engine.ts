@@ -177,13 +177,13 @@ function mouseUp() {
   setupSelectedNode();
   setupHelpers();
 
-  if(engine.gameInstance.input.mouseButtons[0].dblClicked){
+  if (engine.gameInstance.input.mouseButtons[0].doubleClicked) {
     focusActor(selectedNodeId);
-    engine.gameInstance.input.mouseButtons[0].dblClicked = false;
+    engine.gameInstance.input.mouseButtons[0].doubleClicked = false;
   }
 }
 
-function focusActor(selectedNodeId: string) {
+export function focusActor(selectedNodeId: string) {
   const position = new THREE.Box3().setFromObject(data.sceneUpdater.bySceneNodeId[selectedNodeId].actor.threeObject).center();
   if (ui.cameraMode === "2D") position.z = engine.cameraActor.getLocalPosition(new THREE.Vector3()).z;
   engine.cameraActor.setLocalPosition(position);

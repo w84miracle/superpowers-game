@@ -9,7 +9,7 @@ interface KeyState {
 
 interface MouseButtonState {
   isDown: boolean;
-  dblClicked: boolean;
+  doubleClicked: boolean;
   wasJustPressed: boolean;
   wasJustReleased: boolean;
 }
@@ -179,7 +179,7 @@ export default class Input extends EventEmitter {
     // Mouse
     this.newScrollDelta = 0;
     for (let i = 0; i <= 6; i++) {
-      this.mouseButtons[i] = { isDown: false,dblClicked: false, wasJustPressed: false, wasJustReleased: false };
+      this.mouseButtons[i] = { isDown: false, doubleClicked: false, wasJustPressed: false, wasJustReleased: false };
       this.mouseButtonsDown[i] = false;
     }
 
@@ -355,7 +355,7 @@ export default class Input extends EventEmitter {
 
   private onMouseDblClick = (event: MouseEvent) => {
     event.preventDefault();
-    this.mouseButtons[event.button].dblClicked = true;
+    this.mouseButtons[event.button].doubleClicked = true;
   };
 
   private onContextMenu = (event: Event) => {

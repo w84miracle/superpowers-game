@@ -1,5 +1,5 @@
 import { data } from "./network";
-import engine, { setupHelpers, updateCameraMode } from "./engine";
+import engine, { setupHelpers, updateCameraMode, focusActor } from "./engine";
 
 import { Node } from "../../data/SceneNodes";
 import { Component } from "../../data/SceneComponents";
@@ -132,12 +132,8 @@ document.addEventListener("keydown", (event) => {
 
     case (window as any).KeyEvent.DOM_VK_F:
       if (ui.nodesTreeView.selectedNodes.length !== 1) return;
-
       const nodeId = ui.nodesTreeView.selectedNodes[0].dataset["id"];
-      const position = new THREE.Box3().setFromObject(data.sceneUpdater.bySceneNodeId[nodeId].actor.threeObject).center();
-      if (ui.cameraMode === "2D") position.z = engine.cameraActor.getLocalPosition(new THREE.Vector3()).z;
-      engine.cameraActor.setLocalPosition(position);
-      if (ui.cameraMode === "3D") engine.cameraActor.moveOriented(new THREE.Vector3(0, 0, 20));
+      focusActor(nodeId);
       break;
   }
 });
@@ -347,11 +343,7 @@ function onNodeActivate() {
   // Focus an actor by double clicking on treeview
   if (ui.nodesTreeView.selectedNodes.length !== 1) return;
   const nodeId = ui.nodesTreeView.selectedNodes[0].dataset["id"];
-  const position = new THREE.Box3().setFromObject(data.sceneUpdater.bySceneNodeId[nodeId].actor.threeObject).center();
-  if (ui.cameraMode === "2D") position.z = engine.cameraActor.getLocalPosition(new THREE.Vector3()).z;
-  engine.cameraActor.setLocalPosition(position);
-  if (ui.cameraMode === "3D") engine.cameraActor.moveOriented(new THREE.Vector3(0, 0, 20));
-
+  focusActor(nodeId);
 }
 
 export function setupSelectedNode() {
